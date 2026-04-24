@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = "vinod/customer-service"
         DOCKER_TAG = "${env.BUILD_NUMBER}"
-        DOCKER_CREDENTIALS_ID = 'docker-hub-credentials'
+        DOCKER_CREDENTIALS_ID = 'docker-learnwithvinod'
     }
 
     stages {
