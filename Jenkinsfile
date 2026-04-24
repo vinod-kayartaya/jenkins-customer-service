@@ -52,10 +52,9 @@ pipeline {
                 // Give it some time to start up
                 sh "sleep 15"
                 
-                // Test the endpoints by spinning up a lightweight curl container 
-                // in the same network namespace as the test container. 
-                // This bypasses the Jenkins container networking isolation!
-                sh "docker run --rm --network container:test-container-${BUILD_NUMBER} curlimages/curl -f -v http://localhost:8080/api/customers || exit 1"
+                // Test the endpoints by executing wget directly INSIDE the running container.
+                // This avoids needing to pull external images like curlimages/curl and completely bypasses networking issues!
+                sh "docker exec test-container-${BUILD_NUMBER} wget -qO- http://localhost:8080/api/customers || exit 1"
             }
             post {
                 always {
